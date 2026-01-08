@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лабиринт Тьмы - Исправленная версия</title>
+    <title>Лабиринт Тьмы - Полная версия</title>
     <style>
         * {
             margin: 0;
@@ -46,6 +46,7 @@
             border: 1px solid #333;
             backdrop-filter: blur(5px);
             min-width: 200px;
+            z-index: 10;
         }
         
         .ui-element {
@@ -81,6 +82,7 @@
             text-shadow: 0 0 5px #ff0000;
         }
         
+        /* МЕНЮ */
         #menu-screen {
             position: absolute;
             top: 0;
@@ -100,10 +102,41 @@
             font-size: 3.5rem;
             color: #00ffff;
             text-shadow: 0 0 15px #00ffff, 0 0 30px #0088ff;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             letter-spacing: 4px;
             text-align: center;
             animation: titleGlow 3s infinite alternate;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+        
+        .game-description {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            max-width: 600px;
+            border: 1px solid #333;
+        }
+        
+        .description-title {
+            color: #00ffff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .description-text {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
         
         .menu-button {
@@ -111,12 +144,12 @@
             color: #00ffff;
             border: 2px solid #00ffff;
             padding: 12px 30px;
-            margin: 10px;
+            margin: 8px;
             font-size: 1.1rem;
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s;
-            min-width: 180px;
+            min-width: 200px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
             backdrop-filter: blur(5px);
@@ -135,12 +168,14 @@
             font-size: 0.8rem;
         }
         
+        /* ИГРОВОЙ ЭКРАН */
         #game-screen {
             display: none;
             width: 100%;
             height: 100%;
         }
         
+        /* ЭКРАН ЗАВЕРШЕНИЯ УРОВНЯ */
         #level-complete {
             position: absolute;
             top: 50%;
@@ -164,18 +199,136 @@
             font-size: 1.5rem;
         }
         
-        #debug-info {
+        /* ВЫБОР СЛОЖНОСТИ */
+        #difficulty-menu {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            color: #0f0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            text-align: center;
             display: none;
+            z-index: 150;
+            backdrop-filter: blur(10px);
+            min-width: 350px;
         }
         
+        .difficulty-title {
+            color: #00ffff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .difficulty-btn {
+            padding: 12px 20px;
+            background: rgba(34, 34, 34, 0.8);
+            border: 1px solid #444;
+            color: #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .difficulty-btn:hover {
+            border-color: #00ffff;
+            color: #00ffff;
+            transform: translateX(5px);
+        }
+        
+        .difficulty-btn.active {
+            border-color: #00ffff;
+            color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.1);
+        }
+        
+        .difficulty-description {
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            text-align: left;
+            padding-left: 10px;
+        }
+        
+        /* ИНСТРУКЦИЯ */
+        #instructions-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            max-width: 500px;
+            display: none;
+            z-index: 150;
+            backdrop-filter: blur(10px);
+        }
+        
+        .instructions-title {
+            color: #00ffff;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .instructions-content {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .instructions-section {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .instructions-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            color: #00ffff;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        /* КНОПКИ ЗАКРЫТИЯ */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        
+        /* АНИМАЦИИ */
         @keyframes pulse {
             0% { opacity: 0.7; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.1); }
@@ -187,8 +340,10 @@
             100% { text-shadow: 0 0 20px #00ffff, 0 0 40px #0088ff, 0 0 60px #0088ff; }
         }
         
+        /* АДАПТИВНОСТЬ */
         @media (max-width: 768px) {
             .title { font-size: 2.5rem; }
+            .subtitle { font-size: 1rem; }
             #ui { 
                 top: 10px; 
                 left: 10px; 
@@ -197,26 +352,59 @@
             }
             .menu-button { 
                 padding: 10px 20px; 
-                min-width: 150px; 
+                min-width: 180px; 
                 font-size: 1rem;
+                margin: 5px;
             }
+            #difficulty-menu, #instructions-screen {
+                width: 90%;
+                min-width: unset;
+                padding: 20px;
+            }
+        }
+        
+        /* КОНТРОЛЫ */
+        #controls-info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #888;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
     <div id="game-container">
+        <!-- ГЛАВНОЕ МЕНЮ -->
         <div id="menu-screen">
             <h1 class="title">ЛАБИРИНТ ТЬМЫ</h1>
-            <p style="color: #888; margin-bottom: 40px; text-align: center; max-width: 600px;">
-                Исправленная версия - беспрерывное движение
-            </p>
-            <div id="menu-buttons">
-                <div class="menu-button" onclick="startGame()">НАЧАТЬ ИГРУ</div>
-                <div class="menu-button" onclick="toggleDebug()">ВКЛ/ВЫКЛ ДЕБАГ</div>
+            <p class="subtitle">Хоррор-головоломка с алгоритмом Прима</p>
+            
+            <div class="game-description">
+                <div class="description-title">ОПИСАНИЕ ИГРЫ</div>
+                <div class="description-text">
+                    Вы - заблудшая душа, попавшая в Лабиринт Тьмы. Чтобы сбежать, нужно пройти 5 уровней, 
+                    собирая кристаллы-осколки и находя ключи от дверей. Вас преследуют Духи Лабиринта - 
+                    избегайте их любой ценой! Каждый уровень сложнее предыдущего, а лабиринт генерируется 
+                    заново при каждой игре по уникальному алгоритму Прима.
+                </div>
             </div>
+            
+            <div id="menu-buttons">
+                <div class="menu-button" onclick="startGame()">▶ НАЧАТЬ ИГРУ</div>
+                <div class="menu-button" onclick="showDifficultyMenu()">⚙ ВЫБОР СЛОЖНОСТИ</div>
+                <div class="menu-button" onclick="showInstructions()">📖 ИНСТРУКЦИЯ</div>
+                <div class="menu-button" onclick="toggleDebug()">🐛 РЕЖИМ ОТЛАДКИ</div>
+            </div>
+            
             <div class="developer">Разработчик: Просветов Сергей Николаевич</div>
         </div>
         
+        <!-- ИГРОВОЙ ЭКРАН -->
         <div id="game-screen">
             <canvas id="game-canvas"></canvas>
             <div id="ui">
@@ -234,34 +422,174 @@
                 <div class="ui-element">
                     <div>Жизни: <span id="hearts">❤️❤️❤️</span></div>
                 </div>
+                <div class="ui-element">
+                    <div>Сложность: <span id="difficulty">Покой</span></div>
+                </div>
+                <div class="ui-element">
+                    <div>Время: <span id="timer">00:00</span></div>
+                </div>
                 <div class="menu-button" onclick="returnToMenu()" style="margin: 10px 0 0 0; padding: 8px; font-size: 0.9rem;">
-                    В МЕНЮ
+                    ← В МЕНЮ
                 </div>
             </div>
             
-            <div id="debug-info">
+            <div id="controls-info">
+                Управление: WASD или стрелки<br>
+                Цель: Собрать кристаллы → Найти ключ → Выйти через дверь
+            </div>
+            
+            <div id="debug-info" style="display: none; position: absolute; bottom: 60px; left: 20px; background: rgba(0,0,0,0.7); color: #0f0; padding: 10px; font-size: 12px;">
                 <div>Позиция: <span id="debug-pos">0,0</span></div>
-                <div>Цель: <span id="debug-target">0,0</span></div>
                 <div>Движение: <span id="debug-moving">нет</span></div>
-                <div>Клетка: <span id="debug-cell">1,1</span></div>
+                <div>FPS: <span id="debug-fps">60</span></div>
             </div>
         </div>
         
+        <!-- ЭКРАН ЗАВЕРШЕНИЯ УРОВНЯ -->
         <div id="level-complete">
             <h2 class="glowing-text">УРОВЕНЬ ПРОЙДЕН!</h2>
-            <p>Все кристаллы собраны</p>
-            <p>Дверь открыта</p>
-            <div class="menu-button" onclick="nextLevel()">СЛЕДУЮЩИЙ УРОВЕНЬ</div>
+            <p>Все кристаллы собраны, ключ найден</p>
+            <p>Дверь в следующий уровень открыта</p>
+            <div class="menu-button" onclick="nextLevel()">СЛЕДУЮЩИЙ УРОВЕНЬ →</div>
+        </div>
+        
+        <!-- МЕНЮ ВЫБОРА СЛОЖНОСТИ -->
+        <div id="difficulty-menu">
+            <div class="close-btn" onclick="hideDifficultyMenu()">×</div>
+            <h2 class="difficulty-title">ВЫБЕРИТЕ СЛОЖНОСТЬ</h2>
+            <div class="difficulty-selector">
+                <div class="difficulty-btn" onclick="setDifficulty('Покой')">
+                    ПОКОЙ (Легко)
+                    <div class="difficulty-description">• Медленные духи • Большой обзор • Много времени</div>
+                </div>
+                <div class="difficulty-btn" onclick="setDifficulty('Тревога')">
+                    ТРЕВОГА (Нормально)
+                    <div class="difficulty-description">• Духи быстрее на 20% • Нормальный обзор</div>
+                </div>
+                <div class="difficulty-btn" onclick="setDifficulty('Страх')">
+                    СТРАХ (Сложно)
+                    <div class="difficulty-description">• Обзор уменьшен на 30% • Духи быстрее на 40%</div>
+                </div>
+                <div class="difficulty-btn" onclick="setDifficulty('Ужас')">
+                    УЖАС (Очень сложно)
+                    <div class="difficulty-description">• Духи чувствуют вас через стены • Мало времени</div>
+                </div>
+                <div class="difficulty-btn" onclick="setDifficulty('Паника')">
+                    ПАНИКА (Эксперт)
+                    <div class="difficulty-description">• Ограниченное время • Очень быстрые духи</div>
+                </div>
+                <div class="difficulty-btn" onclick="setDifficulty('Кошмар')">
+                    КОШМАР (Невозможно)
+                    <div class="difficulty-description">• Все сложности одновременно • Для настоящих маньяков</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ЭКРАН ИНСТРУКЦИИ -->
+        <div id="instructions-screen">
+            <div class="close-btn" onclick="hideInstructions()">×</div>
+            <h2 class="instructions-title">📖 ИНСТРУКЦИЯ</h2>
+            <div class="instructions-content">
+                <div class="instructions-section">
+                    <div class="section-title">ЦЕЛЬ ИГРЫ</div>
+                    <div>Пройти 5 уровней лабиринта, собирая кристаллы и находя ключи. 
+                    Чтобы открыть дверь на следующий уровень, нужно собрать ВСЕ кристаллы 
+                    и найти ключ на уровне.</div>
+                </div>
+                
+                <div class="instructions-section">
+                    <div class="section-title">УПРАВЛЕНИЕ</div>
+                    <div><strong>ПК:</strong> WASD или стрелки для движения<br>
+                    <strong>Мобильные:</strong> свайпы по экрану<br>
+                    <strong>Пауза:</strong> клавиша P или Esc</div>
+                </div>
+                
+                <div class="instructions-section">
+                    <div class="section-title">ИГРОВЫЕ ЭЛЕМЕНТЫ</div>
+                    <div>• <span style="color:#00ffff">Кристаллы</span> - светятся синим, нужно собрать все<br>
+                    • <span style="color:#ffaa00">Ключ</span> - светится оранжевым, открывает дверь<br>
+                    • <span style="color:#ff5555">Духи</span> - красные призраки, избегайте их!<br>
+                    • <span style="color:#00ff00">Дверь</span> - выход с уровня (только с ключом)</div>
+                </div>
+                
+                <div class="instructions-section">
+                    <div class="section-title">СИСТЕМА СЛОЖНОСТИ</div>
+                    <div>6 уровней сложности влияют на:<br>
+                    • Скорость духов<br>
+                    • Радиус обзора<br>
+                    • Время на прохождение<br>
+                    • Поведение духов</div>
+                </div>
+                
+                <div class="instructions-section">
+                    <div class="section-title">ОСОБЕННОСТИ</div>
+                    <div>• Лабиринт генерируется по алгоритму Прима<br>
+                    • Каждый уровень уникален<br>
+                    • 3 жизни на всю игру<br>
+                    • Прогрессивная сложность<br>
+                    • Атмосферный звук и визуальные эффекты</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // ================= КОНФИГУРАЦИЯ =================
+        // ================= КОНФИГУРАЦИЯ ИГРЫ =================
         const CONFIG = {
             CELL_SIZE: 40,
-            MAZE_WIDTH: 21,  // Должно быть нечетным
-            MAZE_HEIGHT: 21, // Должно быть нечетным
-            PLAYER_SPEED: 0.2, // Увеличили скорость
+            MAZE_WIDTH: 21,  // Нечетное для алгоритма Прима
+            MAZE_HEIGHT: 21, // Нечетное для алгоритма Прима
+            PLAYER_SPEED: 0.2,
+            
+            // НАСТРОЙКИ СЛОЖНОСТИ
+            DIFFICULTY_SETTINGS: {
+                'Покой': {
+                    spiritSpeed: 0.02,
+                    sightRadius: 250,
+                    spiritCount: 2,
+                    timeLimit: null,
+                    spiritVision: 5
+                },
+                'Тревога': {
+                    spiritSpeed: 0.03,
+                    sightRadius: 220,
+                    spiritCount: 3,
+                    timeLimit: null,
+                    spiritVision: 6
+                },
+                'Страх': {
+                    spiritSpeed: 0.04,
+                    sightRadius: 180,
+                    spiritCount: 3,
+                    timeLimit: null,
+                    spiritVision: 7
+                },
+                'Ужас': {
+                    spiritSpeed: 0.05,
+                    sightRadius: 140,
+                    spiritCount: 4,
+                    timeLimit: 300, // 5 минут
+                    spiritVision: 8
+                },
+                'Паника': {
+                    spiritSpeed: 0.06,
+                    sightRadius: 100,
+                    spiritCount: 4,
+                    timeLimit: 180, // 3 минуты
+                    spiritVision: 10
+                },
+                'Кошмар': {
+                    spiritSpeed: 0.08,
+                    sightRadius: 80,
+                    spiritCount: 5,
+                    timeLimit: 120, // 2 минуты
+                    spiritVision: 12
+                }
+            },
+            
+            // КРИСТАЛЛЫ ПО УРОВНЯМ
+            CRYSTALS_PER_LEVEL: [3, 4, 4, 5, 5],
+            
             DEBUG_MODE: false
         };
 
@@ -275,6 +603,8 @@
         let totalCrystals = 3;
         let hasKey = false;
         let playerLives = 3;
+        let difficulty = 'Покой';
+        let currentDifficulty = CONFIG.DIFFICULTY_SETTINGS[difficulty];
         let maze = [];
         let player = { 
             x: 1, 
@@ -291,21 +621,24 @@
         let spirits = [];
         let keysPressed = {};
         let lastTime = 0;
+        let gameStartTime = 0;
+        let levelStartTime = 0;
+        let elapsedTime = 0;
+        let frameCount = 0;
+        let lastFpsUpdate = 0;
+        let currentFps = 60;
+        let timeLimit = null;
 
-        // ================= УПРОЩЕННЫЙ АЛГОРИТМ ПРИМА =================
+        // ================= АЛГОРИТМ ПРИМА =================
         function generateMazePrim(width, height) {
-            // Создаем сетку (1 - стена, 0 - проход)
             const maze = Array(height).fill().map(() => Array(width).fill(1));
-            
-            // Начальная точка (всегда нечетные координаты)
             const startX = 1;
             const startY = 1;
-            maze[startY][startX] = 0;
             
-            // Список граничных стен
+            maze[startY][startX] = 0;
             let walls = [];
             
-            // Добавляем начальные стены
+            // Начальные стены
             const initialWalls = [
                 {x: startX, y: startY - 1, fromX: startX, fromY: startY},
                 {x: startX, y: startY + 1, fromX: startX, fromY: startY},
@@ -319,55 +652,47 @@
             walls.push(...initialWalls);
             
             while (walls.length > 0) {
-                // Выбираем случайную стену
                 const randomIndex = Math.floor(Math.random() * walls.length);
                 const wall = walls[randomIndex];
                 walls.splice(randomIndex, 1);
                 
-                // Координаты клетки за стеной
                 const toX = wall.x + (wall.x - wall.fromX);
                 const toY = wall.y + (wall.y - wall.fromY);
                 
-                // Проверяем, что клетка внутри лабиринта
                 if (toX > 0 && toX < width - 1 && 
-                    toY > 0 && toY < height - 1) {
+                    toY > 0 && toY < height - 1 && 
+                    maze[toY][toX] === 1) {
                     
-                    // Если клетка за стеной еще стена
-                    if (maze[toY][toX] === 1) {
-                        // Открываем стену и клетку
-                        maze[wall.y][wall.x] = 0;
-                        maze[toY][toX] = 0;
-                        
-                        // Добавляем новые стены вокруг новой клетки
-                        const newWalls = [
-                            {x: toX, y: toY - 1, fromX: toX, fromY: toY},
-                            {x: toX, y: toY + 1, fromX: toX, fromY: toY},
-                            {x: toX - 1, y: toY, fromX: toX, fromY: toY},
-                            {x: toX + 1, y: toY, fromX: toX, fromY: toY}
-                        ].filter(newWall => 
-                            newWall.x > 0 && newWall.x < width - 1 && 
-                            newWall.y > 0 && newWall.y < height - 1 &&
-                            maze[newWall.y][newWall.x] === 1
-                        );
-                        
-                        walls.push(...newWalls);
-                    }
+                    maze[wall.y][wall.x] = 0;
+                    maze[toY][toX] = 0;
+                    
+                    const newWalls = [
+                        {x: toX, y: toY - 1, fromX: toX, fromY: toY},
+                        {x: toX, y: toY + 1, fromX: toX, fromY: toY},
+                        {x: toX - 1, y: toY, fromX: toX, fromY: toY},
+                        {x: toX + 1, y: toY, fromX: toX, fromY: toY}
+                    ].filter(newWall => 
+                        newWall.x > 0 && newWall.x < width - 1 && 
+                        newWall.y > 0 && newWall.y < height - 1 &&
+                        maze[newWall.y][newWall.x] === 1
+                    );
+                    
+                    walls.push(...newWalls);
                 }
             }
             
-            // Гарантируем, что выход достижим
+            // Гарантируем выход
             const exitX = width - 2;
             const exitY = height - 2;
             maze[exitY][exitX] = 0;
             
-            // Гарантируем соединение с основным лабиринтом
+            // Соединяем выход с лабиринтом
             for (let y = exitY - 1; y <= exitY + 1; y++) {
                 for (let x = exitX - 1; x <= exitX + 1; x++) {
                     if (x > 0 && x < width - 1 && y > 0 && y < height - 1) {
-                        if (maze[y][x] === 0 && 
-                            (x === exitX || y === exitY) &&
-                            !(x === exitX && y === exitY)) {
-                            maze[exitY][exitX] = 0;
+                        if (maze[y][x] === 0 && (x === exitX || y === exitY)) {
+                            // Выход соединен
+                            break;
                         }
                     }
                 }
@@ -378,26 +703,24 @@
 
         // ================= ГЕНЕРАЦИЯ УРОВНЯ =================
         function generateLevel(level) {
-            console.log(`Генерация уровня ${level}...`);
+            console.log(`Генерация уровня ${level}, сложность: ${difficulty}`);
+            
+            // Обновляем настройки сложности
+            currentDifficulty = CONFIG.DIFFICULTY_SETTINGS[difficulty];
+            timeLimit = currentDifficulty.timeLimit;
             
             // Генерация лабиринта
             maze = generateMazePrim(CONFIG.MAZE_WIDTH, CONFIG.MAZE_HEIGHT);
-            
-            // Проверка проходимости лабиринта
-            if (!isMazePassable(maze)) {
-                console.warn("Лабиринт непроходим, генерируем заново");
-                return generateLevel(level); // Рекурсивно генерируем заново
-            }
             
             // Сброс объектов
             crystals = [];
             spirits = [];
             
             // Настройка уровня
-            totalCrystals = Math.min(3 + level - 1, 5);
-            const spiritCount = Math.min(2 + level - 1, 6);
+            totalCrystals = CONFIG.CRYSTALS_PER_LEVEL[level - 1] || 5;
+            const spiritCount = currentDifficulty.spiritCount + Math.floor((level - 1) / 2);
             
-            // Позиция игрока (всегда в начале)
+            // Позиция игрока
             player.gridX = 1;
             player.gridY = 1;
             player.x = 1;
@@ -406,22 +729,21 @@
             player.moveQueue = null;
             player.moveProgress = 0;
             
-            // Собираем все доступные клетки
+            // Доступные клетки
             const availableCells = [];
             for (let y = 0; y < maze.length; y++) {
                 for (let x = 0; x < maze[y].length; x++) {
                     if (maze[y][x] === 0 && 
-                        !(x === 1 && y === 1) && // Не стартовая позиция
-                        Math.abs(x - 1) + Math.abs(y - 1) > 5) { // Не слишком близко к старту
+                        !(x === 1 && y === 1) &&
+                        distance(x, y, 1, 1) > 5) {
                         availableCells.push({ x, y });
                     }
                 }
             }
             
-            // Перемешиваем клетки
             shuffleArray(availableCells);
             
-            // Размещаем кристаллы
+            // Кристаллы
             for (let i = 0; i < totalCrystals && availableCells.length > 0; i++) {
                 const cell = availableCells.pop();
                 crystals.push({
@@ -432,7 +754,7 @@
                 });
             }
             
-            // Размещаем ключ
+            // Ключ
             if (availableCells.length > 0) {
                 const keyCell = availableCells.pop();
                 key = {
@@ -442,14 +764,14 @@
                 };
             }
             
-            // Размещаем дверь (в противоположном углу)
+            // Дверь
             door = {
                 x: CONFIG.MAZE_WIDTH - 2,
                 y: CONFIG.MAZE_HEIGHT - 2,
                 open: false
             };
             
-            // Размещаем духов (подальше от игрока)
+            // Духи
             for (let i = 0; i < spiritCount && availableCells.length > 0; i++) {
                 const cell = availableCells.pop();
                 spirits.push({
@@ -459,9 +781,10 @@
                     gridY: cell.y,
                     targetX: cell.x,
                     targetY: cell.y,
-                    speed: 0.02 + (level * 0.01),
+                    speed: currentDifficulty.spiritSpeed * (1 + (level - 1) * 0.2),
                     phase: Math.random() * Math.PI * 2,
-                    moveCooldown: 0
+                    moveCooldown: 0,
+                    visionRange: currentDifficulty.spiritVision
                 });
             }
             
@@ -469,8 +792,9 @@
             crystalsCollected = 0;
             hasKey = false;
             door.open = false;
+            levelStartTime = Date.now();
             
-            console.log(`Уровень ${level} сгенерирован. Кристаллов: ${totalCrystals}, Духов: ${spiritCount}`);
+            console.log(`Уровень ${level} готов. Духов: ${spiritCount}, Кристаллов: ${totalCrystals}`);
         }
 
         // ================= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =================
@@ -481,37 +805,8 @@
             }
         }
 
-        function isMazePassable(maze) {
-            // Простая проверка на проходимость (DFS от старта к выходу)
-            const width = maze[0].length;
-            const height = maze.length;
-            const visited = Array(height).fill().map(() => Array(width).fill(false));
-            const stack = [{x: 1, y: 1}];
-            
-            while (stack.length > 0) {
-                const {x, y} = stack.pop();
-                
-                if (x === width - 2 && y === height - 2) {
-                    return true; // Нашли путь к выходу
-                }
-                
-                if (x < 0 || x >= width || y < 0 || y >= height || 
-                    maze[y][x] === 1 || visited[y][x]) {
-                    continue;
-                }
-                
-                visited[y][x] = true;
-                
-                // Добавляем соседние клетки
-                stack.push(
-                    {x: x + 1, y},
-                    {x: x - 1, y},
-                    {x, y: y + 1},
-                    {x, y: y - 1}
-                );
-            }
-            
-            return false;
+        function distance(x1, y1, x2, y2) {
+            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
         }
 
         function canMoveTo(x, y) {
@@ -522,9 +817,48 @@
             );
         }
 
+        function updateTimerDisplay() {
+            const currentTime = Date.now();
+            elapsedTime = Math.floor((currentTime - levelStartTime) / 1000);
+            
+            if (timeLimit) {
+                const remaining = timeLimit - elapsedTime;
+                if (remaining <= 0) {
+                    timeOut();
+                    return;
+                }
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                const minutes = Math.floor(elapsedTime / 60);
+                const seconds = elapsedTime % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
         // ================= ОБНОВЛЕНИЕ ИГРЫ =================
         function update(deltaTime) {
             if (gameState !== 'playing') return;
+            
+            frameCount++;
+            const currentTime = Date.now();
+            
+            // Обновление FPS каждую секунду
+            if (currentTime - lastFpsUpdate >= 1000) {
+                currentFps = Math.round((frameCount * 1000) / (currentTime - lastFpsUpdate));
+                frameCount = 0;
+                lastFpsUpdate = currentTime;
+                
+                if (CONFIG.DEBUG_MODE) {
+                    document.getElementById('debug-fps').textContent = currentFps;
+                }
+            }
+            
+            // Обновление таймера
+            updateTimerDisplay();
             
             // Обновление игрока
             updatePlayer(deltaTime);
@@ -542,7 +876,7 @@
         }
 
         function updatePlayer(deltaTime) {
-            // Обработка движения из очереди
+            // Завершение текущего движения
             if (player.moveQueue && player.moveProgress < 1) {
                 player.moveProgress += CONFIG.PLAYER_SPEED * deltaTime / 16;
                 
@@ -561,7 +895,7 @@
                 return;
             }
             
-            // Обработка ввода с клавиатуры
+            // Обработка ввода
             let targetX = player.gridX;
             let targetY = player.gridY;
             let moved = false;
@@ -580,7 +914,7 @@
                 moved = true;
             }
             
-            // Если нужно двигаться и можем двигаться в эту клетку
+            // Начало нового движения
             if (moved && canMoveTo(targetX, targetY) && !player.isMoving) {
                 player.moveQueue = {
                     fromX: player.x,
@@ -597,41 +931,73 @@
 
         function updateSpirits(deltaTime) {
             spirits.forEach(spirit => {
-                // Обновление фазы для анимации
+                // Анимация
                 spirit.phase += 0.02 * deltaTime / 16;
                 
-                // Периодически выбираем новую цель
+                // ИИ духов
                 if (spirit.moveCooldown <= 0) {
-                    const directions = [
-                        {dx: 0, dy: -1},
-                        {dx: 1, dy: 0},
-                        {dx: 0, dy: 1},
-                        {dx: -1, dy: 0}
-                    ];
+                    // Проверка видимости игрока
+                    const playerDist = distance(spirit.gridX, spirit.gridY, player.gridX, player.gridY);
                     
-                    const validDirections = directions.filter(dir => 
-                        canMoveTo(spirit.gridX + dir.dx, spirit.gridY + dir.dy)
-                    );
-                    
-                    if (validDirections.length > 0) {
-                        const dir = validDirections[Math.floor(Math.random() * validDirections.length)];
-                        spirit.targetX = spirit.gridX + dir.dx;
-                        spirit.targetY = spirit.gridY + dir.dy;
+                    if (playerDist <= spirit.visionRange) {
+                        // Преcледование игрока
+                        const directions = [
+                            {dx: 0, dy: -1},
+                            {dx: 1, dy: 0},
+                            {dx: 0, dy: 1},
+                            {dx: -1, dy: 0}
+                        ];
+                        
+                        // Выбираем направление к игроку
+                        let bestDir = null;
+                        let bestDist = Infinity;
+                        
+                        for (const dir of directions) {
+                            const newX = spirit.gridX + dir.dx;
+                            const newY = spirit.gridY + dir.dy;
+                            
+                            if (canMoveTo(newX, newY)) {
+                                const dist = distance(newX, newY, player.gridX, player.gridY);
+                                if (dist < bestDist) {
+                                    bestDist = dist;
+                                    bestDir = dir;
+                                }
+                            }
+                        }
+                        
+                        if (bestDir) {
+                            spirit.targetX = spirit.gridX + bestDir.dx;
+                            spirit.targetY = spirit.gridY + bestDir.dy;
+                        }
+                    } else {
+                        // Случайное блуждание
+                        const directions = [
+                            {dx: 0, dy: -1},
+                            {dx: 1, dy: 0},
+                            {dx: 0, dy: 1},
+                            {dx: -1, dy: 0}
+                        ].filter(dir => canMoveTo(spirit.gridX + dir.dx, spirit.gridY + dir.dy));
+                        
+                        if (directions.length > 0) {
+                            const dir = directions[Math.floor(Math.random() * directions.length)];
+                            spirit.targetX = spirit.gridX + dir.dx;
+                            spirit.targetY = spirit.gridY + dir.dy;
+                        }
                     }
                     
-                    spirit.moveCooldown = 60 + Math.random() * 120; // 1-3 секунды
+                    spirit.moveCooldown = 30 + Math.random() * 60;
                 } else {
                     spirit.moveCooldown -= deltaTime / 16;
                 }
                 
-                // Плавное движение к цели
+                // Движение к цели
                 const dx = spirit.targetX - spirit.x;
                 const dy = spirit.targetY - spirit.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                const dist = Math.sqrt(dx * dx + dy * dy);
                 
-                if (distance > 0.1) {
-                    spirit.x += (dx / distance) * spirit.speed * deltaTime / 16;
-                    spirit.y += (dy / distance) * spirit.speed * deltaTime / 16;
+                if (dist > 0.05) {
+                    spirit.x += (dx / dist) * spirit.speed * deltaTime / 16;
+                    spirit.y += (dy / dist) * spirit.speed * deltaTime / 16;
                 } else {
                     spirit.x = spirit.targetX;
                     spirit.y = spirit.targetY;
@@ -642,7 +1008,7 @@
         }
 
         function checkCollisions() {
-            // Проверка кристаллов
+            // Кристаллы
             crystals.forEach(crystal => {
                 if (!crystal.collected && 
                     Math.abs(player.x - crystal.x) < 0.5 && 
@@ -650,21 +1016,19 @@
                     crystal.collected = true;
                     crystalsCollected++;
                     updateUI();
-                    console.log(`Собран кристалл! Всего: ${crystalsCollected}/${totalCrystals}`);
                 }
             });
             
-            // Проверка ключа
+            // Ключ
             if (!key.collected && 
                 Math.abs(player.x - key.x) < 0.5 && 
                 Math.abs(player.y - key.y) < 0.5) {
                 key.collected = true;
                 hasKey = true;
                 updateUI();
-                console.log('Ключ найден!');
             }
             
-            // Проверка двери
+            // Дверь
             if (Math.abs(player.x - door.x) < 0.7 && 
                 Math.abs(player.y - door.y) < 0.7) {
                 if (crystalsCollected === totalCrystals && hasKey) {
@@ -673,26 +1037,21 @@
                 }
             }
             
-            // Проверка духов
+            // Духи
             spirits.forEach(spirit => {
-                const dist = Math.sqrt(
-                    Math.pow(player.x - spirit.x, 2) + 
-                    Math.pow(player.y - spirit.y, 2)
-                );
+                const dist = distance(player.x, player.y, spirit.x, spirit.y);
                 
                 if (dist < 0.7) {
                     playerLives--;
                     updateUI();
                     
-                    // Сброс позиции игрока
+                    // Сброс позиции
                     player.x = 1;
                     player.y = 1;
                     player.gridX = 1;
                     player.gridY = 1;
                     player.isMoving = false;
                     player.moveQueue = null;
-                    
-                    console.log(`Потеряна жизнь! Осталось: ${playerLives}`);
                     
                     if (playerLives <= 0) {
                         gameOver();
@@ -704,87 +1063,47 @@
         function updateDebugInfo() {
             document.getElementById('debug-pos').textContent = 
                 `${player.x.toFixed(2)}, ${player.y.toFixed(2)}`;
-            document.getElementById('debug-target').textContent = 
-                `${player.gridX}, ${player.gridY}`;
             document.getElementById('debug-moving').textContent = 
                 player.isMoving ? 'да' : 'нет';
-            document.getElementById('debug-cell').textContent = 
-                `${Math.floor(player.x)}, ${Math.floor(player.y)}`;
         }
 
         // ================= ОТРИСОВКА =================
         function draw() {
-            // Очистка canvas
+            // Очистка
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Расчет смещения для центрирования камеры
+            // Смещение камеры
             const offsetX = canvas.width / 2 - player.x * CONFIG.CELL_SIZE;
             const offsetY = canvas.height / 2 - player.y * CONFIG.CELL_SIZE;
             
-            // Отрисовка лабиринта
+            // Отрисовка элементов
             drawMaze(offsetX, offsetY);
-            
-            // Отрисовка кристаллов
             drawCrystals(offsetX, offsetY);
-            
-            // Отрисовка ключа
             drawKey(offsetX, offsetY);
-            
-            // Отрисовка двери
             drawDoor(offsetX, offsetY);
-            
-            // Отрисовка духов
             drawSpirits(offsetX, offsetY);
-            
-            // Отрисовка игрока
             drawPlayer(offsetX, offsetY);
-            
-            // Эффект тумана войны
             drawFogOfWar();
         }
 
         function drawMaze(offsetX, offsetY) {
-            const cellSize = CONFIG.CELL_SIZE;
+            const cs = CONFIG.CELL_SIZE;
             
             for (let y = 0; y < maze.length; y++) {
                 for (let x = 0; x < maze[y].length; x++) {
                     if (maze[y][x] === 1) {
-                        // Стена
                         ctx.fillStyle = '#111';
-                        ctx.fillRect(
-                            x * cellSize + offsetX,
-                            y * cellSize + offsetY,
-                            cellSize,
-                            cellSize
-                        );
+                        ctx.fillRect(x * cs + offsetX, y * cs + offsetY, cs, cs);
                         
-                        // Текстура стены
+                        // Текстура
                         ctx.fillStyle = '#222';
                         for (let i = 0; i < 2; i++) {
-                            const rx = Math.random() * cellSize;
-                            const ry = Math.random() * cellSize;
-                            const rw = Math.random() * 2 + 1;
-                            const rh = Math.random() * 2 + 1;
-                            ctx.fillRect(
-                                x * cellSize + offsetX + rx,
-                                y * cellSize + offsetY + ry,
-                                rw,
-                                rh
-                            );
-                        }
-                    } else {
-                        // Пол (проход) - можно добавить легкую текстуру
-                        if ((x + y) % 2 === 0) {
-                            ctx.fillStyle = '#050505';
-                            ctx.fillRect(
-                                x * cellSize + offsetX,
-                                y * cellSize + offsetY,
-                                cellSize,
-                                cellSize
-                            );
+                            const rx = Math.random() * cs;
+                            const ry = Math.random() * cs;
+                            ctx.fillRect(x * cs + offsetX + rx, y * cs + offsetY + ry, 2, 2);
                         }
                     }
                 }
@@ -792,21 +1111,20 @@
         }
 
         function drawCrystals(offsetX, offsetY) {
-            const cellSize = CONFIG.CELL_SIZE;
+            const cs = CONFIG.CELL_SIZE;
             
             crystals.forEach(crystal => {
                 if (!crystal.collected) {
                     crystal.pulse += 0.05;
                     const size = 8 + Math.sin(crystal.pulse) * 2;
                     
-                    // Свечение
                     ctx.shadowColor = '#00ffff';
                     ctx.shadowBlur = 15;
                     ctx.fillStyle = '#00ffff';
                     ctx.beginPath();
                     ctx.arc(
-                        crystal.x * cellSize + cellSize/2 + offsetX,
-                        crystal.y * cellSize + cellSize/2 + offsetY,
+                        crystal.x * cs + cs/2 + offsetX,
+                        crystal.y * cs + cs/2 + offsetY,
                         size,
                         0,
                         Math.PI * 2
@@ -818,73 +1136,52 @@
         }
 
         function drawKey(offsetX, offsetY) {
-            const cellSize = CONFIG.CELL_SIZE;
+            const cs = CONFIG.CELL_SIZE;
             
             if (!key.collected) {
-                // Свечение ключа
                 ctx.shadowColor = '#ffaa00';
                 ctx.shadowBlur = 10;
                 ctx.fillStyle = '#ffaa00';
                 ctx.fillRect(
-                    key.x * cellSize + cellSize/4 + offsetX,
-                    key.y * cellSize + cellSize/3 + offsetY,
-                    cellSize/2,
-                    cellSize/3
+                    key.x * cs + cs/4 + offsetX,
+                    key.y * cs + cs/3 + offsetY,
+                    cs/2,
+                    cs/3
                 );
                 ctx.shadowBlur = 0;
-                
-                // Детали ключа
-                ctx.fillStyle = '#ff8800';
-                ctx.beginPath();
-                ctx.arc(
-                    key.x * cellSize + cellSize/2 + offsetX,
-                    key.y * cellSize + cellSize/2 - 5 + offsetY,
-                    6,
-                    0,
-                    Math.PI * 2
-                );
-                ctx.fill();
             }
         }
 
         function drawDoor(offsetX, offsetY) {
-            const cellSize = CONFIG.CELL_SIZE;
+            const cs = CONFIG.CELL_SIZE;
             
             ctx.fillStyle = door.open ? '#006600' : '#660000';
-            ctx.fillRect(
-                door.x * cellSize + offsetX,
-                door.y * cellSize + offsetY,
-                cellSize,
-                cellSize
-            );
+            ctx.fillRect(door.x * cs + offsetX, door.y * cs + offsetY, cs, cs);
             
-            // Символ двери
             ctx.fillStyle = '#ffffff';
             ctx.font = 'bold 24px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(
                 door.open ? '✓' : '✗',
-                door.x * cellSize + cellSize/2 + offsetX,
-                door.y * cellSize + cellSize/2 + offsetY
+                door.x * cs + cs/2 + offsetX,
+                door.y * cs + cs/2 + offsetY
             );
         }
 
         function drawSpirits(offsetX, offsetY) {
-            const cellSize = CONFIG.CELL_SIZE;
+            const cs = CONFIG.CELL_SIZE;
             
             spirits.forEach(spirit => {
-                // Плавающая анимация
                 const floatY = Math.sin(spirit.phase) * 3;
                 
-                // Тело духа
                 ctx.shadowColor = '#ff0000';
                 ctx.shadowBlur = 20;
                 ctx.fillStyle = 'rgba(255, 50, 50, 0.8)';
                 ctx.beginPath();
                 ctx.arc(
-                    spirit.x * cellSize + cellSize/2 + offsetX,
-                    spirit.y * cellSize + cellSize/2 + offsetY + floatY,
+                    spirit.x * cs + cs/2 + offsetX,
+                    spirit.y * cs + cs/2 + offsetY + floatY,
                     10,
                     0,
                     Math.PI * 2
@@ -896,15 +1193,15 @@
                 ctx.fillStyle = '#000';
                 ctx.beginPath();
                 ctx.arc(
-                    spirit.x * cellSize + cellSize/2 - 3 + offsetX,
-                    spirit.y * cellSize + cellSize/2 - 3 + offsetY + floatY,
+                    spirit.x * cs + cs/2 - 3 + offsetX,
+                    spirit.y * cs + cs/2 - 3 + offsetY + floatY,
                     2,
                     0,
                     Math.PI * 2
                 );
                 ctx.arc(
-                    spirit.x * cellSize + cellSize/2 + 3 + offsetX,
-                    spirit.y * cellSize + cellSize/2 - 3 + offsetY + floatY,
+                    spirit.x * cs + cs/2 + 3 + offsetX,
+                    spirit.y * cs + cs/2 - 3 + offsetY + floatY,
                     2,
                     0,
                     Math.PI * 2
@@ -914,16 +1211,15 @@
         }
 
         function drawPlayer(offsetX, offsetY) {
-            const cellSize = CONFIG.CELL_SIZE;
+            const cs = CONFIG.CELL_SIZE;
             
-            // Свечение игрока
             ctx.shadowColor = '#00ffff';
             ctx.shadowBlur = 25;
             ctx.fillStyle = '#00ffff';
             ctx.beginPath();
             ctx.arc(
-                player.x * cellSize + cellSize/2 + offsetX,
-                player.y * cellSize + cellSize/2 + offsetY,
+                player.x * cs + cs/2 + offsetX,
+                player.y * cs + cs/2 + offsetY,
                 12,
                 0,
                 Math.PI * 2
@@ -931,12 +1227,11 @@
             ctx.fill();
             ctx.shadowBlur = 0;
             
-            // Тело игрока
             ctx.fillStyle = '#ffffff';
             ctx.beginPath();
             ctx.arc(
-                player.x * cellSize + cellSize/2 + offsetX,
-                player.y * cellSize + cellSize/2 + offsetY,
+                player.x * cs + cs/2 + offsetX,
+                player.y * cs + cs/2 + offsetY,
                 8,
                 0,
                 Math.PI * 2
@@ -945,11 +1240,10 @@
         }
 
         function drawFogOfWar() {
-            const radius = 200;
+            const radius = currentDifficulty.sightRadius;
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
             
-            // Создание градиента для тумана
             const gradient = ctx.createRadialGradient(
                 centerX, centerY, radius * 0.3,
                 centerX, centerY, radius
@@ -957,7 +1251,6 @@
             gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
             gradient.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
             
-            // Применение тумана
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -966,7 +1259,17 @@
         document.addEventListener('keydown', (e) => {
             keysPressed[e.key] = true;
             
-            // Предотвращаем прокрутку страницы
+            // Пауза
+            if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
+                if (gameState === 'playing') {
+                    gameState = 'paused';
+                } else if (gameState === 'paused') {
+                    gameState = 'playing';
+                    lastTime = performance.now();
+                }
+                e.preventDefault();
+            }
+            
             if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'w', 'a', 's', 'd'].includes(e.key)) {
                 e.preventDefault();
             }
@@ -985,10 +1288,6 @@
             e.preventDefault();
         }, { passive: false });
         
-        canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault(); // Предотвращаем прокрутку
-        }, { passive: false });
-        
         canvas.addEventListener('touchend', (e) => {
             if (gameState !== 'playing' || player.isMoving) return;
             
@@ -1003,16 +1302,14 @@
             let targetX = player.gridX;
             let targetY = player.gridY;
             
-            // Определение направления свайпа
             if (Math.abs(dx) > Math.abs(dy)) {
-                if (dx > 30) targetX++; // Вправо
-                else if (dx < -30) targetX--; // Влево
+                if (dx > 30) targetX++;
+                else if (dx < -30) targetX--;
             } else {
-                if (dy > 30) targetY++; // Вниз
-                else if (dy < -30) targetY--; // Вверх
+                if (dy > 30) targetY++;
+                else if (dy < -30) targetY--;
             }
             
-            // Движение если возможно
             if (canMoveTo(targetX, targetY) && !player.isMoving) {
                 player.moveQueue = {
                     fromX: player.x,
@@ -1038,9 +1335,28 @@
             if (gameState === 'playing') {
                 update(deltaTime);
                 draw();
+            } else if (gameState === 'paused') {
+                // Отрисовка экрана паузы
+                draw();
+                drawPauseScreen();
             }
             
             requestAnimationFrame(gameLoop);
+        }
+
+        function drawPauseScreen() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('ПАУЗА', canvas.width / 2, canvas.height / 2 - 50);
+            
+            ctx.font = '24px Arial';
+            ctx.fillText('Нажмите P или ESC для продолжения', canvas.width / 2, canvas.height / 2 + 20);
+            ctx.fillText('Сложность: ' + difficulty, canvas.width / 2, canvas.height / 2 + 60);
         }
 
         // ================= ИНТЕРФЕЙС =================
@@ -1049,8 +1365,8 @@
             document.getElementById('crystals').textContent = crystalsCollected;
             document.getElementById('total-crystals').textContent = totalCrystals;
             document.getElementById('key-status').textContent = hasKey ? 'ДА' : 'НЕТ';
+            document.getElementById('difficulty').textContent = difficulty;
             
-            // Обновление жизней
             let hearts = '';
             for (let i = 0; i < 3; i++) {
                 hearts += i < playerLives ? '❤️' : '🖤';
@@ -1065,6 +1381,9 @@
             playerLives = 3;
             keysPressed = {};
             lastTime = 0;
+            gameStartTime = Date.now();
+            frameCount = 0;
+            lastFpsUpdate = Date.now();
             
             document.getElementById('menu-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'block';
@@ -1072,16 +1391,14 @@
             generateLevel(currentLevel);
             updateUI();
             
-            // Сбрасываем игровой цикл
             requestAnimationFrame(gameLoop);
-            
-            console.log('Игра начата! Уровень 1');
+            console.log(`Игра начата. Сложность: ${difficulty}`);
         }
 
         function completeLevel() {
             gameState = 'levelComplete';
             document.getElementById('level-complete').style.display = 'block';
-            console.log(`Уровень ${currentLevel} пройден!`);
+            console.log(`Уровень ${currentLevel} пройден за ${elapsedTime} сек.`);
         }
 
         function nextLevel() {
@@ -1093,13 +1410,19 @@
                 gameState = 'playing';
                 console.log(`Начинается уровень ${currentLevel}`);
             } else {
-                alert('🎉 ПОЗДРАВЛЯЕМ! Вы прошли все уровни Лабиринта Тьмы!');
+                const totalTime = Math.floor((Date.now() - gameStartTime) / 1000);
+                alert(`🎉 ПОБЕДА!\nВы прошли все 5 уровней Лабиринта Тьмы!\nОбщее время: ${Math.floor(totalTime/60)}:${(totalTime%60).toString().padStart(2,'0')}\nСложность: ${difficulty}`);
                 returnToMenu();
             }
         }
 
+        function timeOut() {
+            alert('⏰ ВРЕМЯ ВЫШЛО!\nДухи лабиринта поймали вас...');
+            gameOver();
+        }
+
         function gameOver() {
-            alert('☠️ Вас поглотила тьма... Игра окончена');
+            alert('☠️ ВАС ПОГЛОТИЛА ТЬМА\nИгра окончена');
             returnToMenu();
         }
 
@@ -1111,10 +1434,56 @@
             document.getElementById('debug-info').style.display = 'none';
         }
 
+        // ================= МЕНЮ СЛОЖНОСТИ =================
+        function showDifficultyMenu() {
+            // Сброс активной кнопки
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(difficulty)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            document.getElementById('difficulty-menu').style.display = 'block';
+        }
+
+        function hideDifficultyMenu() {
+            document.getElementById('difficulty-menu').style.display = 'none';
+        }
+
+        function setDifficulty(level) {
+            difficulty = level;
+            currentDifficulty = CONFIG.DIFFICULTY_SETTINGS[level];
+            
+            // Обновление активной кнопки
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(level)) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Обновление отображения в UI
+            document.getElementById('difficulty').textContent = difficulty;
+            
+            hideDifficultyMenu();
+            console.log(`Сложность установлена: ${difficulty}`);
+        }
+
+        // ================= ИНСТРУКЦИЯ =================
+        function showInstructions() {
+            document.getElementById('instructions-screen').style.display = 'block';
+        }
+
+        function hideInstructions() {
+            document.getElementById('instructions-screen').style.display = 'none';
+        }
+
         function toggleDebug() {
             CONFIG.DEBUG_MODE = !CONFIG.DEBUG_MODE;
-            document.getElementById('debug-info').style.display = 
-                CONFIG.DEBUG_MODE ? 'block' : 'none';
+            const debugInfo = document.getElementById('debug-info');
+            debugInfo.style.display = CONFIG.DEBUG_MODE ? 'block' : 'none';
+            console.log(`Режим отладки: ${CONFIG.DEBUG_MODE ? 'ВКЛ' : 'ВЫКЛ'}`);
         }
 
         // ================= ИНИЦИАЛИЗАЦИЯ =================
@@ -1122,17 +1491,19 @@
             updateUI();
             console.log('Игра "Лабиринт Тьмы" загружена!');
             
-            // Обработка изменения размера окна
+            // Инициализация сложности
+            setDifficulty('Покой');
+            
+            // Обработка изменения размера
             window.addEventListener('resize', () => {
-                if (gameState === 'playing') {
+                if (gameState === 'playing' || gameState === 'paused') {
                     draw();
+                    if (gameState === 'paused') drawPauseScreen();
                 }
             });
             
-            // Предотвращаем контекстное меню на canvas
-            canvas.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-            });
+            // Предотвращение контекстного меню
+            canvas.addEventListener('contextmenu', (e) => e.preventDefault());
         };
     </script>
 </body>
