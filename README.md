@@ -23,4 +23,4 @@
 Просветов Сергей Николаевич
 
 ## Играть онлайн
-[Открыть игру](https://ваш-username.github.io/dark-maze-game/)
+[Открыть игру](https://prsvet12-116.github.io/-/)
